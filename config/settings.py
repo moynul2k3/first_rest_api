@@ -1,9 +1,9 @@
 # from rest_framework_simplejwt.settings import api_settings
+import os
 from datetime import timedelta
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-jj188c8q)@q=9e)in72sv(b^e05t(ptn%_(nd!drgruw&@5w*$'
-
 DEBUG = True
 
 # ALLOWED_HOSTS = [ ]
@@ -108,7 +108,8 @@ USE_TZ = True
 #     MEDIA_ROOT = "/home/tcitsociety/public_html/tcits/media/"
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+# STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
