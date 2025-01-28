@@ -120,6 +120,14 @@ AUTH_USER_MODEL = 'accounts.User'
 
 CORS_ALLOW_CREDENTIALS = True
 
+# CSRF_TRUSTED_ORIGINS = [
+#     'http://localhost:3000',  # Next.js dev server
+#     'http://127.0.0.1:3000',  # Next.js dev server
+# ]
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:3000",  # Your frontend's URL
+#     "http://127.0.0.1:3000",  # Your frontend's URL
+# ]
 if DEBUG:
     CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
     CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
@@ -132,6 +140,7 @@ else:
 # SESSION_COOKIE_SECURE = False  # Set to True in production when using HTTPS
 
 # CORS_ORIGIN_ALLOW_ALL = False  # Use with CORS_ALLOWED_ORIGINS for security
+
 
 # SESSION_COOKIE_DOMAIN = "http://127.0.0.1:3000"
 AUTHENTICATION_BACKENDS = [
