@@ -4,7 +4,7 @@ from datetime import timedelta
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-jj188c8q)@q=9e)in72sv(b^e05t(ptn%_(nd!drgruw&@5w*$'
-DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = [ ]
 ALLOWED_HOSTS = ['127.0.0.1:8000', '.vercel.app', '*']
@@ -120,20 +120,18 @@ AUTH_USER_MODEL = 'accounts.User'
 
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:3000',  # Next.js dev server
-    'http://127.0.0.1:3000',  # Next.js dev server
-]
+if DEBUG:
+    CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
+    CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
+else:
+    CSRF_TRUSTED_ORIGINS = ['https://first-next-project-smoky.vercel.app']
+    CORS_ALLOWED_ORIGINS = ['https://first-next-project-smoky.vercel.app']
 
 
 # SESSION_COOKIE_SAMESITE = None  # Allow cookies to be sent across different origins
 # SESSION_COOKIE_SECURE = False  # Set to True in production when using HTTPS
 
 # CORS_ORIGIN_ALLOW_ALL = False  # Use with CORS_ALLOWED_ORIGINS for security
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Your frontend's URL
-    "http://127.0.0.1:3000",  # Your frontend's URL
-]
 
 # SESSION_COOKIE_DOMAIN = "http://127.0.0.1:3000"
 AUTHENTICATION_BACKENDS = [
