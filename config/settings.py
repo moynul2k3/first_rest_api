@@ -4,7 +4,7 @@ from datetime import timedelta
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-jj188c8q)@q=9e)in72sv(b^e05t(ptn%_(nd!drgruw&@5w*$'
-DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = [ ]
 ALLOWED_HOSTS = ['127.0.0.1:8000', '.vercel.app', '*']
@@ -130,7 +130,8 @@ CORS_ALLOW_CREDENTIALS = True
 # ]
 if DEBUG:
     CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
-    CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
+    CORS_ALLOWED_ORIGINS = ['http://localhost:3000',
+                            'https://first-next-project-smoky.vercel.app']
 else:
     CSRF_TRUSTED_ORIGINS = ['https://first-next-project-smoky.vercel.app']
     CORS_ALLOWED_ORIGINS = ['https://first-next-project-smoky.vercel.app']

@@ -14,6 +14,38 @@ class ProductImageSerializer(serializers.ModelSerializer):
         ]
 
 
+class AllProductSerializer(serializers.ModelSerializer):
+    productimage = ProductImageSerializer(many=True, read_only=True)
+    image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Product
+        fields = [
+            'id',
+            'name',
+            'details',
+            'stock',
+            'price',
+            'discount',
+            'discount_price',
+            'sell_price',
+            'weight',
+            'point',
+            'top',
+            'ratings',
+            'created_at',
+            'image',  # First image URL field
+            'productimage',
+        ]
+
+    def get_image(self, obj):
+        request = self.context.get('request')
+        first_image = obj.productimage.first()  # Get the first image
+        if first_image and first_image.image:
+            # return first_image.image.url  # Return the image URL
+            return request.build_absolute_uri(first_image.image.url) if first_image else None
+        return None  # Return None if no image exists
+
 class ProductSerializer(serializers.ModelSerializer):
     productimage = ProductImageSerializer(many=True, read_only=True)
     class Meta:
@@ -37,7 +69,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class SubCategorySerializer(serializers.ModelSerializer):
-    products = ProductSerializer(many=True, read_only=True)  # Nested products
+    products = ProductSerializer(many=True, read_only=True)
 
     class Meta:
         model = SubCategory
@@ -51,6 +83,10 @@ class SubCategorySerializer(serializers.ModelSerializer):
             'created_at',
             'products',
         ]
+
+    def get_image_url(self, obj):
+        request = self.context.get('request')
+        return request.build_absolute_uri(obj.image.url) if obj.image else None
 
 
 

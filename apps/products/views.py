@@ -9,32 +9,53 @@ from .serializers import *
 class CategoryListView(APIView):
     def get(self, request):
         categories = Category.objects.all()
-        serializer = CategorySerializer(categories, many=True)
+        serializer = CategorySerializer(
+            categories, many=True, context={'request': request})
         return Response(serializer.data)
 
 class SubCategoryListView(APIView):
     def get(self, request):
         subcategories = SubCategory.objects.all()
-        serializer = SubCategorySerializer(subcategories, many=True)
+        serializer = SubCategorySerializer(
+            subcategories, many=True, context={'request': request})
         return Response(serializer.data)
 
 class CategoryView(APIView):
     def get(self, request, pk):
         category = get_object_or_404(Category, pk=pk)
-        serializer = CategorySerializer(category)
+        serializer = CategorySerializer(category, context={'request': request})
         return Response(serializer.data)
     
 class SubCategoryView(APIView):
     def get(self, request, pk):
         subcategory = get_object_or_404(SubCategory, pk=pk)
-        serializer = SubCategorySerializer(subcategory)
+        serializer = SubCategorySerializer(
+            subcategory, context={'request': request})
         return Response(serializer.data)
 
 class ProductView(APIView):
     def get(self, request, slug):
-        product = get_object_or_404(Product, slug=slug)
-        serializer = ProductSerializer(product)
+        products = get_object_or_404(Product, slug=slug)
+        serializer = ProductSerializer(products, context={'request': request})
         return Response(serializer.data)
+
+
+class AllProductView(APIView):
+    def get(self, request):
+        products = Product.objects.all()  # QuerySet of Product instances
+        serializer = AllProductSerializer(
+            # Use many=True to indicate multiple objects
+            products, many=True, context={'request': request})
+        return Response(serializer.data)
+
+
+
+
+
+
+
+
+
 
 
 
