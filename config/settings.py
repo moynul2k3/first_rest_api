@@ -4,10 +4,12 @@ from datetime import timedelta
 from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-jj188c8q)@q=9e)in72sv(b^e05t(ptn%_(nd!drgruw&@5w*$'
-DEBUG = False
+DEBUG = True
 
-# ALLOWED_HOSTS = [ ]
-ALLOWED_HOSTS = ['127.0.0.1:8000', '.vercel.app', '*']
+if DEBUG:
+    ALLOWED_HOSTS = ['*']
+else:
+    ALLOWED_HOSTS = ["*"]
 
 
 INSTALLED_APPS = [
@@ -28,6 +30,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -61,12 +64,21 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+            # 'NAME': '/home/tcitsociety/db.itsociety/db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': '/home/dotbdcom/db.dot95/db.sqlite3',
+        }
+    }
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -107,11 +119,21 @@ USE_TZ = True
 #     STATIC_ROOT = "/home/tcitsociety/public_html/tcits/static/"
 #     MEDIA_ROOT = "/home/tcitsociety/public_html/tcits/media/"
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 # STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR / 'media'
+
+STATIC_URL = 'static/'
+MEDIA_URL = 'media/'
+
+if DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    MEDIA_ROOT = BASE_DIR / 'media'
+else:
+    STATIC_ROOT = "/home/dotbdcom/public_html/dot95/static/"
+    MEDIA_ROOT = "/home/dotbdcom/public_html/dot95/media/"
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -120,18 +142,9 @@ AUTH_USER_MODEL = 'accounts.User'
 
 CORS_ALLOW_CREDENTIALS = True
 
-# CSRF_TRUSTED_ORIGINS = [
-#     'http://localhost:3000',  # Next.js dev server
-#     'http://127.0.0.1:3000',  # Next.js dev server
-# ]
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:3000",  # Your frontend's URL
-#     "http://127.0.0.1:3000",  # Your frontend's URL
-# ]
 if DEBUG:
     CSRF_TRUSTED_ORIGINS = ['http://localhost:3000']
-    CORS_ALLOWED_ORIGINS = ['http://localhost:3000',
-                            'https://first-next-project-smoky.vercel.app']
+    CORS_ALLOWED_ORIGINS = ['http://localhost:3000']
 else:
     CSRF_TRUSTED_ORIGINS = ['https://first-next-project-smoky.vercel.app']
     CORS_ALLOWED_ORIGINS = ['https://first-next-project-smoky.vercel.app']
